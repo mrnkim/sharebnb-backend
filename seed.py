@@ -7,19 +7,19 @@ db.drop_all()
 db.create_all()
 
 u1 = User(
-    username="testuser1",
-    first_name="firsttest",
-    last_name="lasttest",
-    email="email@gmail.com",
+    username="nonhostuser",
+    first_name="nonhost",
+    last_name="non",
+    email="email@email.com",
     password="password",
     is_host=False
 )
 
 h1 = User(
     username="hostuser",
-    first_name="firsttest",
-    last_name="lasttest",
-    email="email1234@gmail.com",
+    first_name="host",
+    last_name="yes",
+    email="email1234@email.com",
     password="password",
     is_host=True
 )
@@ -29,7 +29,7 @@ l1 = Listing(
     details="details",
     street="streetname",
     city="cityname",
-    state="Ca",
+    state="CA",
     zip=12345,
     country="USA",
     price_per_night=10,
@@ -48,7 +48,7 @@ b1 = Booking(
 
 m1 = Message(
     id=1,
-    from_username="testuser1",
+    from_username="nonhostuser",
     property_id=1,
     body="body of message",
     sent_at_date = "2008-11-12 11:12:01"

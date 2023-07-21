@@ -14,7 +14,7 @@ from flask_jwt_extended import current_user
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 
-AMAZON_BASE_URL = "https://sharebnb-bucket.s3.us-west-1.amazonaws.com"
+AMAZON_BASE_URL = f"https://{os.environ['BUCKET_NAME']}.s3.us-west-1.amazonaws.com"
 
 app = Flask(__name__)
 CORS(app)
@@ -141,7 +141,7 @@ def update_user(username):
     Take in a json and returns the updated user
     return a json
         {"user": {"username", "first_name", "last_name", "email", "is_host",}
-        } 
+        }
     """
 
     data = request.json
@@ -182,7 +182,7 @@ def delete_user(username):
 
 @app.post('/listings')
 def create_listing():
-    """create a listing by receiving 
+    """create a listing by receiving
         {
             "city", "country", "details", "image", "price_per_night", "state",
             "street", "title", "username", "zip"
@@ -191,7 +191,7 @@ def create_listing():
         {
         "listing": {"city", "country", "details", "id", "image_url", "price_per_night",
             "state", "street", "title", "username", "zip"}
-        } 
+        }
     """
     image = request.files.get('image', None)
 
@@ -226,9 +226,9 @@ def update_listing(id):
 
     Take in a json and returns the updated listing
     return a json
-        {"listing": {"city", "country", "details", "id", "image_url", 
+        {"listing": {"city", "country", "details", "id", "image_url",
         "price_per_night", "state", "street", "title", "username", "zip"}
-        } 
+        }
     """
 
     listing = Listing.query.get_or_404(id)
@@ -262,18 +262,18 @@ def update_listing(id):
 
 @app.get('/listings')
 def get_listings():
-    """Get all listings from database or filter if there is a query string passed in 
+    """Get all listings from database or filter if there is a query string passed in
     returns an json with a list of users
     {
         "listings": [{listing}, {listing}, {listing}]
     }
     """
-    
+
 
     searchTerm = request.args.get('q', None)
 
     if searchTerm:
-        
+
         filtered_listing = [listing.serialize() for listing in Listing.query.filter_by(title=searchTerm)]
         return jsonify(listings=filtered_listing)
 
@@ -284,10 +284,10 @@ def get_listings():
 
 @app.get('/listings/<int:id>')
 def get_listing(id):
-    """Get a listings from database based on the url params 
+    """Get a listings from database based on the url params
     returns an json with a user
     {
-        "listing":{"city", "country", "details", "id", "image_url", 
+        "listing":{"city", "country", "details", "id", "image_url",
         "price_per_night", "state", "street", "title", "username", "zip"}]
     }
     """
@@ -330,7 +330,7 @@ def create_message():
     """create a message by receiving
         {"body", "property_id", "from_username"}
     return a json
-        {"message": { "body", "id", "sent_at_date" } 
+        {"message": { "body", "id", "sent_at_date" }
     """
 
     data = request.json
@@ -348,7 +348,7 @@ def create_message():
 
 @app.get('/messages/<int:id>')
 def get_message(id):
-    """Get a message from database by id 
+    """Get a message from database by id
     returns an json with a message
         {"message": { "body", "id", "sent_at_date" }
     """
@@ -363,7 +363,7 @@ def get_message(id):
 
 @app.get('/bookings/<int:id>')
 def get_booking(id):
-    """Get a booking from database by id 
+    """Get a booking from database by id
     returns an json with a booking
         {"booking": {"id", "booking_price_per_night", "check_in_date", "check_out_date"
         "property_id", "username"}
@@ -379,7 +379,7 @@ def get_booking(id):
 
 @app.get('/bookings')
 def get_bookings():
-    """Get all booking from database 
+    """Get all booking from database
     returns an json with a booking
         {"booking": [booking, booking, booking]}
     """
@@ -396,15 +396,15 @@ def get_bookings():
 def create_booking():
     """create a booking by receiving
         {
-        "username", "property_id", "check_in_date", "check_out_date", 
+        "username", "property_id", "check_in_date", "check_out_date",
         "booking_price_per_night"}
 
     return a json
         {
         "booking": {
-            "booking_price_per_night", "check_in_date", "check_out_date", "id", 
+            "booking_price_per_night", "check_in_date", "check_out_date", "id",
             "property_id", "username"}
-        } 
+        }
     """
 
     data = request.json
