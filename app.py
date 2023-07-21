@@ -14,7 +14,7 @@ from flask_jwt_extended import current_user
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 
-AMAZON_BASE_URL = f"https://{os.environ['BUCKET_NAME']}.s3.us-west-1.amazonaws.com"
+AMAZON_BASE_URL = "https://sharebnb-bucket2.s3.us-west-1.amazonaws.com"
 
 app = Flask(__name__)
 CORS(app)
